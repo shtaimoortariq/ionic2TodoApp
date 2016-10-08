@@ -3,7 +3,7 @@ import { Platform } from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
-import { HomePage } from '../pages/home/home';
+
 import { LoginPage } from '../pages/login/login';
 
 

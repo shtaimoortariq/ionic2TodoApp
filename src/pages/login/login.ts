@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 import { AngularFire, AuthProviders, AuthMethods, FirebaseAuthState  } from 'angularfire2';
 
 import {SignupPage} from '../signup/signup';
+import {Dashboard} from '../dashboard/dashboard';
+
+
 @Component({
   selector: 'login-page',
   templateUrl: 'login.html'
@@ -13,7 +16,7 @@ export class LoginPage {
   password: string;
 
 
-  constructor(public navCtrl: NavController, public af: AngularFire) {
+  constructor(public navCtrl: NavController, public af: AngularFire, public toastCtrl: ToastController) {
     this.userName = "", this.password = "";
   }
 
@@ -24,12 +27,32 @@ export class LoginPage {
   login() {
 
     this.af.auth.login({ email: this.userName, password: this.password },
+      { provider: AuthProviders.Password, method: AuthMethods.Password })
 
+      .then((data) => {
+        let toast = this.toastCtrl.create({
+          message: 'User login successfully',
+          duration: 3000,
+          position: 'top'
+        });
 
-      { provider: AuthProviders.Password, method: AuthMethods.Password }).then((data) => {
+        toast.present().then((done) => {
+           this.navCtrl.push(Dashboard);
+        });
+
         console.log("data", data);
       })
+
       .catch((err) => {
+
+        let toast = this.toastCtrl.create({
+          message: 'Wrong email or password',
+          duration: 3000,
+          position: 'top'
+        });
+
+        toast.present();
+
         console.log("error", err)
       });
 

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, ToastController } from 'ionic-angular';
-import { AngularFire, AuthProviders, AuthMethods, FirebaseAuthState  } from 'angularfire2';
+import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
 
 import {SignupPage} from '../signup/signup';
 import {Dashboard} from '../dashboard/dashboard';
@@ -37,7 +37,7 @@ export class LoginPage {
         });
 
         toast.present().then((done) => {
-           this.navCtrl.push(Dashboard);
+          this.navCtrl.push(Dashboard);
         });
 
         console.log("data", data);

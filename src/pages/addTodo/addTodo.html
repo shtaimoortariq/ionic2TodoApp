@@ -9,5 +9,12 @@
 
 <ion-content>
 
-    
+    <ion-list>
+        <ion-item>
+            <ion-label floating>addTodo</ion-label>
+            <ion-input type="text" [(ngModel)]="todoText"></ion-input>
+        </ion-item>
+    </ion-list>
+    <button ion-fab mini (click)="create()"><ion-icon name="add"></ion-icon></button>
+
 </ion-content>

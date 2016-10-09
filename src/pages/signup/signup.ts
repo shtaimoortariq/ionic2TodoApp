@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, ToastController } from 'ionic-angular';
-import { AngularFire, AuthProviders, AuthMethods  } from 'angularfire2';
+import { AngularFire  } from 'angularfire2';
 
 
 
@@ -12,6 +12,8 @@ export class SignupPage {
 
   userName: string;
   password: string;
+
+
 
 
   constructor(public navCtrl: NavController, public af: AngularFire, public toastCtrl: ToastController) {
@@ -29,7 +31,8 @@ export class SignupPage {
       });
 
       toast.present().then((done) => {
-        this.navCtrl.pop()
+        this.navCtrl.pop();
+      
       });
 
       console.log("data", data);

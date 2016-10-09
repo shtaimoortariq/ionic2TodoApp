@@ -10,7 +10,11 @@
 <ion-content>
 
     <ion-fab top right edge>
-        <button ion-fab mini><ion-icon name="add" (click)="addNewTodo()"></ion-icon></button>
+        <button ion-fab mini (click)="addNewTodo()"><ion-icon name="add"></ion-icon></button>
     </ion-fab>
+
+    <div *ngFor="let i of list | async">
+        <li>{{i.mytodo}}</li>
+    </div>
 
 </ion-content>

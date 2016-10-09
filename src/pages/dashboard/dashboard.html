@@ -13,8 +13,14 @@
         <button ion-fab mini (click)="addNewTodo()"><ion-icon name="add"></ion-icon></button>
     </ion-fab>
 
+
     <div *ngFor="let i of list | async">
-        <li>{{i.mytodo}}</li>
+        <ion-card (click)="showCheckbox()">
+            <ion-item>
+                 {{date | date: 'dd'}}/{{date | date:'MM'}}/{{date | date: 'yyyy'}}
+            </ion-item>
+        </ion-card>
     </div>
+
 
 </ion-content>

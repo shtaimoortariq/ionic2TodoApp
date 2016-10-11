@@ -14,10 +14,10 @@
     </ion-fab>
 
 
-    <div *ngFor="let i of list | async">
-        <ion-card (click)="showCheckbox()">
+    <div *ngFor="let i of key; let index = index">
+        <ion-card (click)="showCheckbox(index)">
             <ion-item>
-                 {{date | date: 'dd'}}/{{date | date:'MM'}}/{{date | date: 'yyyy'}}
+                 {{i}}
             </ion-item>
         </ion-card>
     </div>

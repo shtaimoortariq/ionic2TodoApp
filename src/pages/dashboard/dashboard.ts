@@ -17,64 +17,56 @@ export class Dashboard {
     authUid: any;
     testCheckboxOpen: any;
     testCheckboxResult: any;
-    temp: string[] = [];
-    flag: boolean;
-    completeData :any;
-    day: any;
-    month: any;
-    year: any;
-    date: any;
+
+
+    key: any[] = [];
+    value: any[] = [];
+    temp: any[] = [];
+    key1: any[] = [];
 
     constructor(public navCtrl: NavController, public af: AngularFire, public alertCtrl: AlertController) {
         this.af.auth.subscribe((auth) => { this.authUid = auth.uid });
-        this.list = this.af.database.list('TodoAppDatabase/users/' + this.authUid );
+        this.list = this.af.database.list('TodoAppDatabase/users/' + this.authUid);
         this.load();
-
     }
 
     load() {
 
-        this.date = new Date();
-        this.day = this.date.getDate();
-        this.month = this.date.getMonth();
-        this.year = this.date.getUTCFullYear();
-        this.completeData = this.day.toString() +"-"+ (this.month+1).toString() +"-"+ this.year.toString();  
-
-
-         this.items = this.af.database.list('TodoAppDatabase/users/' + this.authUid+ '/' +this.completeData, { preserveSnapshot: true });
-            this.items
+        this.items = this.af.database.list('TodoAppDatabase/users/' + this.authUid, { preserveSnapshot: true });
+        this.items
             .subscribe(snapshots => {
                 snapshots.forEach(snapshot => {
-                    for(var i = 0; i < this.temp.length; ++i ) {
-                        if(this.temp[i] == snapshot.val().mytodo) {
-                            this.flag = true;
-                        }
-                    }
-                    if(this.flag == true) {
-                        this.flag = false;
-                    }
-                    else {
-                        this.temp.push(snapshot.val().mytodo);
-                    }
+                    this.key.push(snapshot.key);
+                    this.value.push(snapshot.val());
                 });
             })
     }
 
     addNewTodo() {
-        console.log("newData", this.list[1]);
+        console.log("newData", this.list[1].mytodo);
         this.navCtrl.push(AddTodo);
 
     }
 
-    showCheckbox() {
+    showCheckbox(index: number) {
+
+        this.temp = [];
+        this.key1 = [];
+        for (var keys in this.value[index]) {
+            var value = this.value[index][keys];
+            this.temp.push(value.mytodo);
+            this.key1.push(keys);
+            console.log(this.key1);
+        }
+
         let alert = this.alertCtrl.create();
-        alert.setTitle('Which planets have you visited?');
+        alert.setTitle('please select your completed todos');
 
         for (var i = 0; i < this.temp.length; ++i) {
             alert.addInput({
                 type: 'checkbox',
                 label: this.temp[i],
-                value: i.toString(),
+                value: this.key1[i],
                 checked: false
             });
         }
@@ -86,9 +78,17 @@ export class Dashboard {
                 console.log('Checkbox data:', data);
                 this.testCheckboxOpen = false;
                 this.testCheckboxResult = data;
+                console.log(this.testCheckboxResult);
+                this.delete(this.testCheckboxResult, index);
             }
         });
         alert.present();
     }
 
+    delete(data, index) {
+        for (var i = 0; i < data.length; ++i) {
+            this.items = this.af.database.list('TodoAppDatabase/users/' + this.authUid + '/' + this.key[index]);
+            this.items.remove(data[i]);
+        }
+    }
 }

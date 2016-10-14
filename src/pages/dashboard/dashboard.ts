@@ -38,12 +38,14 @@ export class Dashboard {
                 snapshots.forEach(snapshot => {
                     this.key.push(snapshot.key);
                     this.value.push(snapshot.val());
+                    console.log(snapshot.val());
+                    
                 });
             })
     }
 
     addNewTodo() {
-        console.log("newData", this.list[1].mytodo);
+        
         this.navCtrl.push(AddTodo);
 
     }

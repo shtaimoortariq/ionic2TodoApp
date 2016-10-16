@@ -17,25 +17,27 @@ export class SignupPage {
 
 
   signup() {
+    let loading = this.loadingCtrl.create({
+      content: "Please wait...",
+    });
+    loading.present();
+
     this.af.auth.createUser({ email: this.userName, password: this.password }).then((data) => {
-      
+      loading.dismiss();
       let toast = this.toastCtrl.create({
         message: 'User was added successfully',
         duration: 3000,
         position: 'top'
-        
-        
       });
 
       toast.present().then((done) => {
         this.navCtrl.pop();
-      
       });
-
       console.log("data", data);
+
     })
       .catch((err) => {
-
+        loading.dismiss();
         let toast = this.toastCtrl.create({
           message: 'User not added successfully',
           duration: 3000,

@@ -11,17 +11,15 @@
     "module": "es2015",
     "moduleResolution": "node",
     "target": "es5",
-      "typeRoots": [
-      "../node_modules/@types"
-    ],
-    "types": [
+     "types": [
       "firebase"
     ]
   },
+ 
   "exclude": [
     "node_modules"
   ],
-  "compileOnSave": true,
+  "compileOnSave": false,
   "atom": {
     "rewriteTsconfig": false
   }

@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { IonicApp, IonicModule } from 'ionic-angular';
+import { NgModule, ErrorHandler } from '@angular/core';
+import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 import { MyApp } from './app.component';
@@ -22,6 +22,7 @@ const myFirebaseAuthConfig = {
   method: AuthMethods.Password,
 }
 
+
 @NgModule({
   declarations: [
     MyApp,
@@ -33,7 +34,6 @@ const myFirebaseAuthConfig = {
   imports: [
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
-
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -43,6 +43,6 @@ const myFirebaseAuthConfig = {
     LoginPage,
     SignupPage
   ],
-  providers: []
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
 })
 export class AppModule {}
